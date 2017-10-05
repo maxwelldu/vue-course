@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      单价A：<input type="number" v-model="pricea"> 数量：<input type="number" v-model="numbera">
+      单价B：<input type="number" v-model="priceb"> 数量B：<input type="number" v-model="numberb">
+      总价： {{ sum }}
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          pricea: 1,
+          numbera: 1,
+          priceb: 5,
+          numberb: 5
+        },
+        computed: {
+          sum: function() {
+            return this.pricea * this.numbera + this.priceb * this.numberb;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

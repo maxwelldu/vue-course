@@ -1,0 +1,62 @@
+// 变量: 注意，由于变量只能定义一次，其本质就是“常量”。
+@nice-blue: #5B83AD;
+@light-blue: @nice-blue + #111;
+
+#header {
+  color: @light-blue;
+}
+
+// 混合
+.bordered {
+  border-top: 1px dotted black;
+  border-bottom: 2px solid black;
+}
+#menu a {
+  color: #111;
+  .bordered; //把上面的这个样式混合到当前样式中
+}
+.post a {
+  color: red;
+  .bordered;
+}
+
+//嵌套规则
+#header {
+  color: black;
+  .navigation {
+    font-size: 12px;
+  }
+  .logo {
+    width: 300px;
+  }
+}
+.clearfix {
+  display: block;
+  zoom: 1;
+
+  &:after {//&相当于.clarfix
+    content: " ";
+    display: block;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+}
+
+
+
+@base: #f938ab;
+
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow:         @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0, 0, 0, @alpha));
+}
+.box {
+  color: saturate(@base, 5%);
+  border-color: lighten(@base, 30%);
+  div { .box-shadow(0 0 5px, 30%) }
+}

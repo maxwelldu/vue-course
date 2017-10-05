@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h2></h2>
+    <script type="text/javascript">
+      //查找到h2元素
+      var oH2 = document.querySelector('h2');
+      //声明一个空对象
+      var obj = {};
+      //初始化的值
+      var initValue = 'hello';
+      //给obj对象声明一个title属性
+      Object.defineProperty(obj, "title", {
+        get: function (){
+            //当获取值的时候触发的函数
+            return initValue;
+        },
+        set: function (newValue){
+            //当设置值的时候触发的函数,设置的新值通过参数value拿到
+            initValue = newValue;
+            oH2.innerText = newValue;
+        }
+      });
+      //获取值
+      console.log( obj.title );  //hello
+
+      //设置值
+      obj.title = 'change value';
+
+      console.log( obj.title ); //change value
+    </script>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function* helloWorldGenerator() {
+        yield 'hello';
+        yield 'world';
+        return 'ending';
+      }
+      var hw = helloWorldGenerator();
+      hw.next();
+      hw.next();
+      hw.next();
+      hw.next();
+    </script>
+  </body>
+</html>

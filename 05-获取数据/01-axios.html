@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .goods {
+      float: left;
+      width: 200px;
+      height: 350px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      padding: 5px;
+      box-sizing: border-box;
+      border: 1px solid red;
+    }
+    .goods .img {
+      width: 100%;
+      height: 200px;
+    }
+    .goods .img img{
+      width: 100%;
+      height: 100%;
+    }
+    .goods .desc i{
+      color: red;
+      font-style: normal;
+      padding-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div v-for="(item, index) in goodsList" class="goods">
+      <div class="img">
+        <img :src="item.goods_thumb" alt="">
+      </div>
+      <div class="desc">
+        <i>￥{{item.price}}</i> <span>{{item.goods_name}}</span>
+      </div>
+    </div>
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script src="axios.js" charset="utf-8"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        goodsList: []
+      },
+      created: function() {
+        // this.goodsList = []; // 可以修改数据
+        //.then里面的回调函数用箭头函数的写法
+        axios.get('http://h6.duchengjiu.top/shop/api_goods.php?pagesize=48')
+        .then(response => {
+          this.goodsList = response.data.data;
+        })
+        .catch(error => {
+          console.log(error);
+        })
+      }
+    })
+  </script>
+</body>
+</html>

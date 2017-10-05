@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .todolist {
+        width: 500px;
+        min-height: 300px;
+        margin: 100px auto;
+        border: 1px dashed #e4e4e4;
+        padding: 10px;
+      }
+      .todo-header {
+        line-height: 40px;
+        overflow: hidden;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .todo-header h2 {
+        color: orange;
+      }
+      .todo-header, .todo-list, .todo-footer {
+        width: 400px;
+        margin: 0 auto;
+      }
+      .todo-list {
+        min-height: 100px;
+      }
+      .todo-header input {
+        width: 99%;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      li {
+        list-style: none;
+        height: 40px;
+        clear: both;
+        box-sizing: border-box;
+        text-align: left;
+        display: block;
+      }
+      .finish {
+        text-decoration: line-through;
+        color: #ccc;
+      }
+      .btn {
+        display: inline-block;
+        min-width: 30px;
+        text-align: center;
+        padding: 0 5px;
+        border: 1px dashed #ccc;
+        color: white;
+        background-color: orange;
+      }
+      .btn:hover {
+        color: orange;
+        background-color: white;
+      }
+      .delete {
+        display: none;
+        float: right;
+      }
+      li:hover .delete {
+        display: inline-block;
+      }
+      .clear-all {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="vue.js" charset="utf-8"></script>
+    <pre>
+      1.可以回车添加任务（验证内容是否为空）
+      2.可以点击复选框完成任务
+      3.点击删除按钮删除任务
+      4.点击任务区修改任务的内容,并按回车保存
+      5.点击所有，活动，已完成按钮能够显示对应的任务列表以及数据
+      6.清空任务可以将任务全部删除
+    </pre>
+
+    <div class="todolist">
+      <div class="todo-header">
+        <h2>任务清单</h2>
+        <input type="text" v-model="newTodo" placeholder="你需要完成什么" @keyup.enter="addTodo">
+      </div>
+      <div class="todo-list">
+        <ul>
+          <li v-for="(item, index) in filterTodoList" :key="index" :class="{finish: item.checked}">
+            <input type="checkbox" @click="finishOrNot(item)">
+            <span @click="editTodo($event)" @keydown.enter="saveTodo($event, item)" @blur="saveTodo($event, item)">{{ item.name }}</span>
+            <span class="delete btn" @click="deleteTodo(item)">x</span>
+          </li>
+        </ul>
+      </div>
+      <div class="todo-footer">
+        <span @click="showAll" class="btn">所有({{allCount}})</span>
+        <span @click="showActive" class="btn">活动({{activeCount}})</span>
+        <span @click="showCompleted" class="btn">已完成({{completedCount}})</span>
+        <span @click="clearCompleted" class="btn clear-all">清空所有</span>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var app = new Vue({
+        el: '.todolist',
+        data: {
+          //新添加的任务
+          newTodo: '',
+          //显示的任务状态，默认显示所有的任务
+          state: 'all',
+          //所有的任务列表
+          todoList: []
+        },
+        computed: {
+          //所有的条数
+          allCount: function() {
+            return this.todoList.length;
+          },
+          //活动的条数
+          activeCount: function() {
+            return this.todoList.filter(function(item){
+              return item.checked === false;
+            }).length;
+          },
+          //完成的条数
+          completedCount: function() {
+            return this.todoList.filter(function(item){
+              return item.checked === true;
+            }).length;
+          },
+          //过滤当前的任务列表
+          filterTodoList: function() {
+            switch(this.state) {
+              case 'all':
+                return this.todoList;
+                break;
+              case 'active':
+                return this.todoList.filter(function(item){
+                  return item.checked === false;
+                });
+                break;
+              case 'completed':
+                return this.todoList.filter(function(item){
+                  return item.checked === true;
+                });
+                break;
+            }
+          }
+        },
+        methods: {
+          //添加一项任务
+          addTodo: function() {
+            //如果没内容则拦截
+            if (this.newTodo === "") {
+              return;
+            }
+            //一个任务是一个对象，里面有名称和checked, checked为false表示活动(未完成), 为true表示已完成
+            this.todoList.unshift({text: this.newTodo, checked: false});
+            this.newTodo = '';
+          },
+          //编辑todo
+          editTodo: function(event) {
+            var target = event.target || event.srcElement;
+            target.contentEditable = true;
+            target.focus();
+          },
+          //保存todo
+          saveTodo: function(event, item) {
+            var target = event.target || event.srcElement;
+            target.contentEditable = false;
+            target.blur();
+            item.text = target.innerText;
+          },
+          //切换完成的状态是完成或未完成
+          finishOrNot: function(item) {
+            item.checked = !item.checked;
+          },
+          //删除一项
+          deleteTodo: function(item) {
+            for (var i = 0; i < this.todoList.length; i++) {
+              if (this.todoList[i] === item) {
+                this.todoList.splice(i, 1);
+              }
+            }
+          },
+          //改变状态为所有
+          showAll: function() {
+            this.state = 'all';
+          },
+          //改变状态为活动的
+          showActive: function() {
+            this.state = 'active';
+          },
+          //改变状态为完成的
+          showCompleted: function() {
+            this.state = 'completed';
+          },
+          //清空任务
+          clearCompleted: function() {
+            this.todoList = [];
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

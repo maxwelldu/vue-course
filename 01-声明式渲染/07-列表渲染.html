@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="(item, index) in items" :key="item.id">
+          {{ index }} - {{ item.message }}
+        </li>
+      </ul>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: '#app',
+        data: {
+         items: [
+           { message: 'Foo' },
+           { message: 'Bar' }
+         ]
+        }
+      })
+    </script>
+  </body>
+</html>

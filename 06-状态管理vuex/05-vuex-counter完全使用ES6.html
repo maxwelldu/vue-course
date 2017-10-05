@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{ count }}</p>
+      <p>
+        <button @click="increment">+</button>
+        <button @click="decrement">-</button>
+      </p>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script src="vuex.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      //统一管理所有的状态
+      const store = new Vuex.Store({
+        //有哪些状态
+        state: {
+          count: 0
+        },
+        actions: {
+          increment ({commit}, value) {
+            commit('increment', value);
+          },
+          decrement ({commit}, value) {
+            commit('decrement', value);
+          }
+        },
+        //改变，可以通过调用这个改变的方法来修改state的值
+        mutations: {
+          //添加方法
+          increment (state, value) {
+            //修改状态里面的count
+            state.count += value
+          },
+          decrement (state, value) {
+            state.count -= value;
+          }
+        }
+      })
+
+      new Vue({
+        el: '#app',
+        computed: {
+          //根组件里面使用整个store里面的state里面的count值，当这个值发生改变，这里会自动更新
+          //store里面的state值在当前组件中读取
+          count () {
+            return store.state.count
+          }
+        },
+        methods: {
+          //通过在当前组件中触发事件来修改state的数据，修改的时候只能够提交store里面的mutation, 通过store.commit(mutation的名称)
+          //触发事件的时候传递数据
+          increment () {
+            store.dispatch('increment', 5)
+          },
+          decrement () {
+            store.dispatch('decrement', 3)
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

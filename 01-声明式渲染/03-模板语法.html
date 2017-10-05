@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>文本插值</h2>
+      <span>Message: {{ msg }}</span>
+      <h2>纯HTML插值</h2>
+      <div v-html="rawHtml"></div>
+      <h2>属性中绑定值</h2>
+      <div v-bind:id="dynamicId"></div>
+      <h2>添加或删除布尔类型的属性</h2>
+      <button v-bind:disabled="isButtonDisabled">Button</button>
+      <h2>使用JavaScript表达式</h2>
+      {{ number + 1 }}
+      {{ ok ? 'YES' : 'NO' }}
+      {{ message.split('').reverse().join('') }}
+      <div v-bind:id="'list-' + id"></div>
+      <!-- 这是语句，不是表达式 -->
+      <!-- {{ var a = 1 }} -->
+      <!-- 流控制也不会生效，请使用三元表达式 -->
+      <!-- {{ if (ok) { return message } }} -->
+      <h2>指令</h2>
+      <p v-if="seen">现在你看到我了</p>
+      <h2>指令带参数，绑定href属性</h2>
+      <a v-bind:href="url">百度</a>
+      <h2>指令带参数，绑定onclick事件</h2>
+      <a v-on:click="doSomething">点击</a>
+      <h2>修饰符</h2>
+      <form v-on:submit.prevent="onSubmit">
+        <input type="submit" name="" value="提交">
+      </form>
+      <h2>绑定属性的缩写</h2>
+      <!-- 完整语法 -->
+      <a v-bind:href="url">百度</a>
+      <!-- 缩写 -->
+      <a :href="url">百度</a>
+      <h2>绑定事件的缩写</h2>
+      <!-- 完整语法 -->
+      <a v-on:click="doSomething">点击</a>
+      <!-- 缩写 -->
+      <a @click="doSomething">点击</a>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'Hi',
+          rawHtml: '<h1>hello</h1>',
+          dynamicId: 1,
+          isButtonDisabled: false,
+          number: 1,
+          ok: true,
+          message: 'Hello World',
+          id: 1,
+          seen: true,
+          url: 'http://www.baidu.com',
+        },
+        methods: {
+          doSomething: function() {
+            console.log('do something');
+          },
+          onSubmit: function() {
+            console.log('on submit');
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

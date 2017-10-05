@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .main {
+        width: 80%;
+        float: left;
+        min-height: 500px;
+        border: 1px solid red;
+      }
+      .side {
+        width: 18%;
+        float: left;
+        min-height: 500px;
+        border: 1px solid green;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="vue.js" charset="utf-8"></script>
+    <div id="app">
+      <app-header></app-header>
+      <div>
+        <div class="main">
+          <app-main>
+          </app-main>
+        </div>
+        <div class="side">
+          <app-side>
+          </app-side>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      //组件内部必须要有一个根元素，并且只能有一个
+      var AppHeader = {
+        template: '<div>header</div>'
+      };
+      var AppMainTop = {
+        template: '<div>app main top</div>'
+      };
+      var AppMainBottom = {
+        template: '<div>app main bottom</div>'
+      };
+      var AppMain = {
+        //当前组件中注册子组件
+        components: {
+          'app-main-top': AppMainTop,
+          'app-main-bottom': AppMainBottom
+        },
+        //在模板中使用子组件
+        template: '<div>main <app-main-top></app-main-top> <app-main-bottom></app-main-bottom></div>'
+      };
+      var AppSideLeft = {
+        template: '<div>app side left</div>'
+      };
+      var AppSideMiddle = {
+        template: '<div>app side middle</div>'
+      };
+      var AppSideRight = {
+        template: '<div>app side right</div>'
+      };
+      var AppSide = {
+        components: {
+          'app-side-left': AppSideLeft,
+          'app-side-middle': AppSideMiddle,
+          'app-side-right': AppSideRight
+        },
+        template: '<div><app-side-left></app-side-left><app-side-middle></app-side-middle><app-side-right></app-side-right></div>'
+      };
+      var vm = new Vue({
+        el: '#app',
+        components: {
+          'app-header': AppHeader,
+          'app-main': AppMain,
+          'app-side': AppSide
+        }
+      })
+    </script>
+  </body>
+</html>

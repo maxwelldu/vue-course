@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <child :init-counter="counter"></child>
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script>
+    let child = {
+      props: ['initCounter'],
+      data: function() {
+        return {
+          //拿到传递进来的自定义属性 initCounter,并作为当前组件中childCounter的初始值
+          childCounter: this.initCounter
+        }
+      },
+      //点击让当前组件的childCounter值增加，传递过来的initCounter属性不变
+      template: '<div @click="childCounter++">{{initCounter}} - {{childCounter}}</div>'
+    }
+    let app = new Vue({
+      el: '#app',
+      data: {
+        counter: '0'
+      },
+      components: {
+        'child': child
+      }
+    })
+  </script>
+</body>
+</html>

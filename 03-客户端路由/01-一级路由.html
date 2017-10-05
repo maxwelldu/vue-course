@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      a {
+        text-decoration: none;
+        padding: 10px;
+        background-color: gray;
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      main {
+        margin-top: 10px;
+      }
+      .router-link-active {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <router-link to="/news">新闻管理</router-link>
+        <router-link to="/shop">商城管理</router-link>
+      </div>
+      <main>
+
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+      </main>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script src="vue-router.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      // 0. 如果使用模块化机制编程，導入Vue和VueRouter，要调用 Vue.use(VueRouter)
+
+      // 1. 定义（路由）组件。
+      // 可以从其他文件 import 进来
+      var NewsComponent = {
+        template: '<div>我是新闻组件 添加新闻 搜索新闻</div>'
+      };
+      var ShopComponent = {
+        template: '<div>我是商城组件 添加分类 搜索商品</div>'
+      };
+      var NotFoundComponent = {
+        template: '<div>404</div>'
+      };
+      // 2. 定义路由
+      // 每个路由应该映射一个组件。 其中"component" 可以是
+      // 通过 Vue.extend() 创建的组件构造器，
+      // 或者，只是一个组件配置对象。
+      // 我们晚点再讨论嵌套路由。
+      var routes = [
+        {
+          path: '/',
+          redirect: '/news' //当访问到/的时候自动跳到/news这个路由
+        },
+        {
+          path: '/news',
+          component: NewsComponent
+        },
+        {
+          path: '/shop',
+          component: ShopComponent
+        },
+        {
+          path: '*',//表示匹配不到的时候
+          component: NotFoundComponent
+        }
+      ];
+      // 3. 创建 router 实例，然后传 `routes` 配置
+      // 你还可以传别的配置参数, 不过先这么简单着吧。
+      var router = new VueRouter({
+        routes: routes
+      });
+      // 4. 创建和挂载根实例。
+      // 记得要通过 router 配置参数注入路由，
+      // 从而让整个应用都有路由功能
+      var vm = new Vue({
+        el: '#app',
+        router: router
+      });
+    </script>
+  </body>
+</html>

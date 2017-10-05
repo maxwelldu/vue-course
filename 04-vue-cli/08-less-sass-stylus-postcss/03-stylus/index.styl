@@ -1,0 +1,36 @@
+//变量
+font-size = 14px
+
+body
+  font font-size Arial, sans-seri
+
+//插值
+vendor(prop, args)
+  -webkit-{prop} args
+  -moz-{prop} args
+  {prop} args
+
+border-radius()
+  vendor('border-radius', arguments)
+
+box-shadow()
+  vendor('box-shadow', arguments)
+
+button
+  border-radius 1px 2px / 3px 4px
+
+//混合
+border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+form input[type=button]
+  border-radius(5px)
+
+//方法
+add(a, b)
+  a + b
+
+body
+  padding add(10px, 5)

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div class="diy">点击加10</div>
+    <script type="text/javascript">
+      var array = [1, 2, 3];
+      //传统写法
+      array.forEach(function(v, i, a) {
+        console.log(v);
+      });
+      //ES6
+      //当参数只有一个时，不用加括号
+      array.forEach(v => console.log(v));
+
+      var oDiv = document.querySelector('div');
+      function Person() {
+        this.age = 1;
+        this.move();
+        this.bindEvent();
+      }
+      Person.prototype.move = function() {
+        setInterval(() => {
+          this.age ++;
+          console.log(this.age);
+        }, 2000);
+      }
+      Person.prototype.bindEvent = function(){
+        oDiv.onclick = () => {
+          this.age += 10;
+          console.log(this.age);
+        }
+      }
+      new Person();
+
+    </script>
+  </body>
+</html>

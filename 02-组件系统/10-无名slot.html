@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <h1>我是父组件的标题</h1>
+        <child>
+          <p>这是一些初始内容</p>
+          <p>这是更多的初始内容</p>
+        </child>
+      </div>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var Child = {
+        template: `<div>
+                    <h2>我是子组件的标题</h2>
+                    <slot>
+                      只有在没有要分发的内容时才会显示。
+                    </slot>
+                  </div>`
+      }
+      var vm = new Vue({
+        el: '#app',
+        components: {
+          'child': Child
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .router-link-active {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+
+    <div id="app">
+      <p>
+        <router-link to="/user/foo">/user/foo</router-link>
+        <router-link to="/user/bar">/user/bar</router-link>
+        <router-link tag="li" v-for="(item, index) in catList" :key="index" :to="'/goods/' + item.cat_id">{{item.cat_name}}</router-link>
+      </p>
+      <router-view></router-view>
+    </div>
+    <script type="text/javascript">
+    const User = {
+      template: `<div>User {{ $route.params.id }}</div>`,
+      watch: {
+        '$route' (to, from) {
+          // 对路由变化作出响应...
+          console.log(to.params.id);
+          //得到变化的新路由对象里面的id
+          console.log(to, from);
+        }
+      }
+    }
+    const Goods = {
+      template: `<div>Goods {{ $route.params.id }}</div>`,
+      watch: {
+        '$route' (to, from) {
+          console.log(to.params.id);
+        }
+      }
+    }
+
+    const router = new VueRouter({
+      routes: [
+        { path: '/user/:id', component: User },
+        { path: '/goods/:id', component: Goods }
+      ]
+    })
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        catList: [
+          {cat_id: 1, cat_name: "家居"},
+          {cat_id: 2, cat_name: "家具"},
+          {cat_id: 3, cat_name: "美食"},
+        ]
+      },
+      router
+    });
+    </script>
+  </body>
+</html>

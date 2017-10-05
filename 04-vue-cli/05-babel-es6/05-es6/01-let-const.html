@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function f1() {
+        let n = 5; //块级作用域，在这个function内部有效
+        if (true) {
+          let n = 10;//块级作用域，只在if条件内部有效
+        }
+        console.log(n);//5
+      }
+      f1();
+
+      //常量的定义，一般不变的量，比如配置可以设置为常量；
+      //常量的名称通常是全大写，人为约定俗成的；
+      const PI = 3.1415926;
+      console.log(PI);
+
+      PI = 3;//修改常量的值会报错
+      console.log(PI);
+
+      //块级作用域的出现，实际上使得获得广泛应用的立即执行函数表达式（IIFE）不是必要了。
+      // IIFE 写法
+      (function() {
+        var tmp = '...';
+        //...
+      })();
+      //块级作用域写法
+      {
+        let tmp = '...';
+        //...
+      }
+    </script>
+  </body>
+</html>

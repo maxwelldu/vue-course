@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      div {
+        width: 100px;
+        height: 100px;
+      }
+      .active {
+        border: 1px solid red;
+      }
+      .text-danger {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h2>对象语法</h2>
+      <div v-bind:class="{ active: isActive }"></div>
+      <div class="static"
+           v-bind:class="{ active: isActive, 'text-danger': hasError }">
+           信息
+      </div>
+      <div v-bind:class="classObject"></div>
+      <h2>数组的语法</h2>
+      <div v-bind:class="[activeClass, errorClass]"></div>
+      <div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          isActive: true,
+          hasError: true,
+          classObject: {
+            active: true,
+            'text-danger': false
+          },
+          activeClass: 'active',
+          errorClass: 'text-danger'
+        },
+        computed: {
+          // classObject: function () {
+          //   return {
+          //     active: this.isActive && !this.error,
+          //     'text-danger': this.error && this.error.type === 'fatal',
+          //   }
+          // }
+        }
+      })
+    </script>
+  </body>
+</html>

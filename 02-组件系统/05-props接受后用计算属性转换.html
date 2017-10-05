@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 将当前根组件中的parentSize传递给child组件的size属性中 -->
+    <child :size="parentSize"></child>
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script>
+    let child = {
+      props: ['size'],
+      computed: {
+        //计算属性，将传递过来的size属性进行过滤空格并转换成小写, normalSize的值会根据size的值改变而改变
+        normalSize: function() {
+          return this.size.trim().toLowerCase();
+        }
+      },
+      template: '<div>{{size}} {{normalSize}}</div>'
+    }
+    var app = new Vue({
+      el: '#app',
+      data: {
+        parentSize: ' THREE '
+      },
+      components: {
+        'child': child
+      }
+    })
+  </script>
+</body>
+</html>

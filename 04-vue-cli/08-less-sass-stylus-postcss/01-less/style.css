@@ -1,0 +1,46 @@
+#header {
+  color: #6c94be;
+}
+.bordered {
+  border-top: 1px dotted black;
+  border-bottom: 2px solid black;
+}
+#menu a {
+  color: #111;
+  border-top: 1px dotted black;
+  border-bottom: 2px solid black;
+}
+.post a {
+  color: red;
+  border-top: 1px dotted black;
+  border-bottom: 2px solid black;
+}
+#header {
+  color: black;
+}
+#header .navigation {
+  font-size: 12px;
+}
+#header .logo {
+  width: 300px;
+}
+.clearfix {
+  display: block;
+  zoom: 1;
+}
+.clearfix:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.box {
+  color: #fe33ac;
+  border-color: #fdcdea;
+}
+.box div {
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}

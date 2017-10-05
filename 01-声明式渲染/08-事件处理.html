@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script src="vue.js" charset="utf-8"></script>
+    <h2>监听事件</h2>
+    <div id="example-1">
+      <button v-on:click="counter += 1">增加 1</button>
+      <p>这个按钮被点击了 {{ counter }} 次。</p>
+    </div>
+    <script type="text/javascript">
+    var example1 = new Vue({
+      el: '#example-1',
+      data: {
+        counter: 0
+      }
+    })
+    </script>
+
+    <h2>方法事件处理器</h2>
+    <div id="example-2">
+      <!-- `greet` 是在下面定义的方法名 -->
+      <button v-on:click="greet">Greet</button>
+    </div>
+    <script type="text/javascript">
+    var example2 = new Vue({
+      el: '#example-2',
+      data: {
+        name: 'Vue.js'
+      },
+      // 在 `methods` 对象中定义方法
+      methods: {
+        greet: function (event) {
+          // `this` 在方法里指当前 Vue 实例
+          alert('Hello ' + this.name + '!')
+          // `event` 是原生 DOM 事件
+          if (event) {
+            alert(event.target.tagName)
+          }
+        }
+      }
+    })
+    // 也可以用 JavaScript 直接调用方法
+    // example2.greet() // => 'Hello Vue.js!'
+    </script>
+
+    <h2>事件处理函数传参</h2>
+    <div id="example-3">
+      <button v-on:click="say('hi')">Say hi</button>
+      <button v-on:click="say('what')">Say what</button>
+    </div>
+    <script type="text/javascript">
+      new Vue({
+        el: '#example-3',
+        methods: {
+          say: function (message) {
+            alert(message)
+         }
+        }
+      })
+    </script>
+
+    <h2>事件修饰符</h2>
+    <div id="example-4">
+      <div v-on:click="doing">
+        <a v-on:click="doThis">不阻止冒泡</a>
+        <!-- 阻止单击事件冒泡 -->
+        <a v-on:click.stop="doThis">阻止冒泡</a>
+        <!-- 提交事件不再重载页面 -->
+        <form v-on:submit.prevent="onSubmit">
+          <input type="submit" name="" value="提交">
+        </form>
+        <!-- 修饰符可以串联  -->
+        <a v-on:click.stop.prevent="doThat">阻止默认行为和阻止冒泡</a>
+        <!-- 只有修饰符 -->
+        <form v-on:submit.prevent>
+            <input type="submit" name="" value="提交">
+        </form>
+        <!-- 添加事件侦听器时使用事件捕获模式 -->
+        <div v-on:click.capture="doThis">
+            添加事件侦听器时使用事件捕获模式
+        </div>
+        <!-- 只当事件在该元素本身（比如不是子元素）触发时触发回调 -->
+        <div v-on:click.self="doThat">
+          只处理在自身上面的点击事件
+          <div>子元素div</div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var vm = new Vue({
+        el: '#example-4',
+        methods: {
+          doing: function() {
+            console.log('点击父元素');
+          },
+          doThis: function() {
+            console.log('do this');
+          },
+          doThat: function() {
+            console.log('do that');
+          },
+          onSubmit: function() {
+            console.log('提交表单');
+          }
+        }
+      });
+    </script>
+
+    <h2>键值修饰符</h2>
+    <div id="example-5">
+      <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+      <input v-on:keyup.13="submit">
+      <!-- 同上 -->
+      <input v-on:keyup.enter="submit">
+      <!-- 缩写语法 -->
+      <input @keyup.enter="submit">
+      <input @keydown.tab="submit" value="tab">
+      <input @keyup.delete="submit" value="delete或退格">
+      <input @keyup.esc="submit" value="esc">
+      <input @keyup.space="submit" value="space">
+      <input @keyup.up="submit" value="up">
+      <input @keyup.down="submit" value="down">
+      <input @keyup.left="submit" value="left">
+      <input @keyup.right="submit" value="right">
+      <input @keyup.f1="submit" value="f1">
+      <input @keyup.alt.67="submit" value="alt+c">
+      <input @keyup.shift.67="submit" value="shift">
+    </div>
+    <script type="text/javascript">
+      // 可以使用 v-on:keyup.f1
+      Vue.config.keyCodes.f1 = 112
+
+      var vm = new Vue({
+        el: '#example-5',
+        methods: {
+          submit: function(){
+            console.log('触发表单提交');
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

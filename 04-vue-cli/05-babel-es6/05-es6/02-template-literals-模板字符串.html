@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      //产生一个随机数
+      var num = Math.random();
+      //将这个数字输出到console
+      //支持变量
+      console.log(`your num is ${num}`);
+
+      let name = 'maxwelldu';
+      let age = 18;
+
+      console.log(`${name} was ${age}`)
+
+      //模板字符串支持换行
+      var data = [{username: "maxwelldu"}, {username: "hi"}];
+      for (var i = 0; i < data.length; i++) {
+        document.body.innerHTML += `
+            <div>
+              ${data[i].username}
+            </div>
+        `;
+      }
+    </script>
+  </body>
+</html>

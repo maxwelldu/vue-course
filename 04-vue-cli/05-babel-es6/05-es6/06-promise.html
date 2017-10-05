@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+    //不使用promise
+    //这个函数的状态，要么成功，要么失败
+    //成功或失败的时候都会返回值，成功有成功的值，失败有失败的值
+    //这种形式的回调，可以抽象成一个对象，这个对象包括状态和返回值，
+    //以及使用对应的方法来传递回调函数
+    function fun(succ, fail) {
+      var rand = Math.random();
+      if (rand > 0.5) {
+        succ('ok');
+      } else {
+        fail(Error("fail"));
+      }
+    }
+    fun(function(result){
+      console.log(result);
+    }, function(err){
+      console.log(err);
+    });
+    //可能会有回调函数地狱
+    fun(function(result){
+      console.log(result);
+      fun(function(result){
+        console.log(result);
+        fun(function(result){
+          console.log(result);
+        }, function(err){
+          console.log(err);
+        });
+      }, function(err){
+        console.log(err);
+      });
+    }, function(err){
+      console.log(err);
+    });
+
+    //创建promise
+    var promise = new Promise(function(resolve, reject) {
+      // 进行一些异步或耗时操作
+      var rand = Math.random();
+      if ( rand > 0.5 ) {
+          resolve("Stuff worked!");
+      } else {
+          reject(Error("It broke"));
+      }
+    });
+    //绑定处理程序
+    promise.then(function(result) {
+      //promise成功的话会执行这里
+      console.log(result); // "Stuff worked!"
+    }, function(err) {
+      //promise失败会执行这里
+      console.log(err); // Error: "It broke"
+    });
+    //或者用串联的方式调用
+    promise.then(function(result){
+      console.log(result);
+    }).catch(function(err){
+      console.log(err);
+    });
+
+    //比如请求ajax,当回调中继续请求的时候，可以串联书写
+    var getJSON = function(url) {
+      var promise = new Promise(function(resolve, reject){
+        var client = new XMLHttpRequest();
+        client.onreadystatechange = handler;
+        client.open("GET", url);
+        client.responseType = "json";
+        client.setRequestHeader("Accept", "application/json");
+        client.send();
+
+        function handler() {
+          if ( this.readyState !== 4 ) {
+            return;
+          }
+          if (this.status === 200) {
+            resolve(this.response);
+          } else {
+            reject(new Error(this.statusText));
+          }
+        };
+      });
+
+      return promise;
+    };
+
+    getJSON("/07-posts.json")
+    .then(function(json) {
+      console.log('07-posts: Contents: ' + json);
+      return getJSON("/08-posts.json");
+    })
+    .then(function(json) {
+      console.log('08-posts: Contents: ' + json);
+      return getJSON("/09-posts.json");
+    })
+    .then(function(json) {
+      console.log('09-posts: Contents: ' + json);
+      return getJSON("/09-posts.json");
+    })
+    .catch(function(error) {
+      console.error('出错了', error);
+    });
+    </script>
+  </body>
+</html>

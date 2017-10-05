@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <child message="hello!" :my-message="myMessage"></child>
+    <input type="text" v-model="myMessage">
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script>
+    let child = {
+      // 声明 props; 如果是驼峰的命名，在传递属性的时候使用小写
+      props: ['message', 'myMessage'],
+      // 就像 data 一样，prop 可以用在模板内
+      // 同样也可以在 vm 实例中像“this.message”这样使用
+      template: '<span>{{ message }} {{ myMessage }}</span>'
+    };
+    let app = new Vue({
+      el: '#app',
+      data: {
+        myMessage: ''
+      },
+      components: {
+        'child': child
+      }
+    })
+  </script>
+</body>
+</html>

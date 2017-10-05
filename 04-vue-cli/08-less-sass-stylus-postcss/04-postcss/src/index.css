@@ -1,0 +1,4 @@
+* {
+    transition: all .1s;
+    box-shadow: 0 0 3px 5px rgba(222, 222, 222, .3);
+}

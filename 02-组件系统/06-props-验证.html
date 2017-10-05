@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <child
+    :pa="parenta"
+    :pb="parentb"
+    :pc="parentc"
+    :pd="parentd"
+    :pe="parente"
+    :pf="parentf"
+    ></child>
+  </div>
+  <script src="vue.js" charset="utf-8"></script>
+  <script>
+    var child = {
+      props: {
+        //pa这个属性是数字
+        pa: Number,
+        //pa即可以是数字也可以是字符串
+        pb: [String, Number],
+        //pc是必传,并且为数字
+        pc: {
+          type: Number,
+          required: true
+        },
+        //pd是数字并且默认值为100
+        pd: {
+          type: Number,
+          default: 100
+        },
+        //pe是对象，并且默认值为{hello: 'world'}
+        pe: {
+          type: Object,
+          default: function() {
+            return {hello: 'world'}
+          }
+        },
+        //pf是数字并且有自定义验证规则,这个数字要大于100
+        pf: {
+          type: Number,
+          validator: function (v) {
+            return v > 100;
+          }
+        }
+      },
+      //使用父组件中传递过来的值
+      template: "<div>{{pa}} {{pb}} {{pc}} {{pd}} {{pe}} {{pf}}</div>"
+    }
+    var app = new Vue({
+        el: '#app',
+        data: {
+          parenta: 3,
+          parentb: "3",
+          parentc: 1,
+          parentd: 1,
+          parente: {},
+          parentf: 101,
+        },
+        components: {
+          'child': child
+        }
+    });
+  </script>
+</body>
+</html>

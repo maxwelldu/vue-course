@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      a {
+        text-decoration: none;
+        padding: 10px;
+        background-color: gray;
+        color: white;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      div {
+        margin-top: 30px;
+      }
+      .router-link-active {
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <router-link to="/news">新闻管理</router-link>
+        <router-link to="/shop">商城管理</router-link>
+      </div>
+      <main>
+        <router-view></router-view>
+      </main>
+    </div>
+    <script src="vue.js" charset="utf-8"></script>
+    <script src="vue-router.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      var NewsComponent = {
+        template: `<div>
+                    我是新闻组件
+                    <router-link to="/news/add">添加新闻</router-link>
+                    <router-link to="/news/search">搜索新闻</router-link>
+                    <router-view></router-view>
+                  </div>`
+      };
+      var NewsAddComponent = {
+        template: `<div>
+                    <input type="text" placeholder="请输入新闻标题">
+                    <input type="submit" value="添加">
+                  </div>`
+      }
+      var NewsSearchComponent = {
+        template: `<div><input type="text" placeholder="请输入新闻标题"> <input type="submit" value="搜索">
+          <table>
+            <tr>
+              <th>新闻ID</th>
+              <th>新闻名称</th>
+              <th>操作</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>新闻标题</td>
+              <td><input type="button" value="删除"></td>
+            </tr>
+          </table>
+        </div>`
+      };
+      var ShopComponent = {
+        template: `<div>
+                    我是商城组件
+                    <router-link to="/shop/add">添加商品</router-link>
+                    <router-link to="/shop/search">搜索商品</router-link>
+                    <router-view></router-view>
+                  </div>`
+      };
+      var ShopAddComponent = {
+        template: '<div><input type="text" placeholder="请输入商品名称"> <input type="submit" value="添加"></div>'
+      }
+      var ShopSearchComponent = {
+        template: `<div><input type="text" placeholder="请输入商品名称"> <input type="submit" value="搜索">
+          <table>
+            <tr>
+              <th>商品ID</th>
+              <th>商品名称</th>
+              <th>操作</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>商品名称</td>
+              <td><input type="button" value="删除"></td>
+            </tr>
+          </table>
+        </div>`
+      };
+      var NotFoundComponent = {
+        template: '<div>404</div>'
+      };
+      var routes = [
+        {
+          path: '/',
+          redirect: '/news'
+        },
+        {
+          path: '/news',
+          component: NewsComponent,
+          children: [
+            {
+              path: '',
+              redirect: 'add' //如果跳到/news，后面没跟子路由，默认让他跳到add
+            },
+            {
+              path: 'add',
+              component: NewsAddComponent
+            },
+            {
+              path: 'search',
+              component: NewsSearchComponent
+            },
+            {
+              path: '*',
+              component: NotFoundComponent
+            }
+          ]
+        },
+        {
+          path: '/shop',
+          component: ShopComponent,
+          children: [
+            {
+              path: '',
+              redirect: 'add'
+            },
+            {
+              path: 'add',
+              component: ShopAddComponent
+            },
+            {
+              path: 'search',
+              component: ShopSearchComponent
+            },
+            {
+              path: '*',
+              component: NotFoundComponent
+            }
+          ]
+        },
+        {
+          path: '*',
+          component: NotFoundComponent
+        }
+      ];
+      var router = new VueRouter({
+        routes: routes
+      });
+
+      var vm = new Vue({
+        el: '#app',
+        router: router
+      });
+    </script>
+  </body>
+</html>
