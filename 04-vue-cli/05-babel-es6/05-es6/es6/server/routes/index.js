@@ -8,13 +8,14 @@ router.get('/', function (req, res, next) {
 	});
 });
 
+//输出期号和截止时间
 var makeIssue=function(){
-	var date=new Date();
-	var first_issue_date=new Date();
+	var date=new Date();//获取当前时间
+	var first_issue_date=new Date();//第一期的时间9点开始，截止时间为9点10分
 	first_issue_date.setHours(9);
 	first_issue_date.setMinutes(10);
 	first_issue_date.setSeconds(0);
-	var end_issue_date=new Date(first_issue_date.getTime()+77*10*60*1000);
+	var end_issue_date=new Date(first_issue_date.getTime()+77*10*60*1000);//计算截止时间
 
 	var cur_issue,end_time,state;
 	if(date.getTime()-first_issue_date.getTime()>0&&date.getTime()-end_issue_date.getTime()<0){

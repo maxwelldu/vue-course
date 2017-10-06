@@ -5,6 +5,7 @@ class Base{
    * @return {[type]} [description]
    */
   initPlayList(){
+    //可以级联操作
     this.play_list.set('r2',{
       bonus:6,
       tip:'从01～11中任选2个或多个号码，所选号码与开奖号码任意两个号码相同，即中奖<em class="red">6</em>元',
@@ -47,6 +48,7 @@ class Base{
    */
   initNumber(){
     for(let i=1;i<12;i++){
+      //用set数据结构，这样内容不会有重复
       this.number.add((''+i).padStart(2,'0'))
     }
   }
@@ -56,11 +58,13 @@ class Base{
    * @param {[type]} omit [description]
    */
   setOmit(omit){
-    let self=this;
-    self.omit.clear();
+    let self = this;
+    self.omit.clear();//清空map对象
+    //遍历map对象
     for(let [index,item] of omit.entries()){
       self.omit.set(index,item)
     }
+    //设置数据
     $(self.omit_el).each(function(index,item){
       $(item).text(self.omit.get(index))
     });
