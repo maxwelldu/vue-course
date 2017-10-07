@@ -38,4 +38,4 @@ https://github.com/vuejs-templates
 https://github.com/vuejs/awesome-vue
 
 学习顺序：
-安装 -- 声明式渲染 -- 组件系统 -- 客户端路由vue-router  -- 状态管理vuex -- ajax数据请求axios, VueAxios -- 构建系统vue-cli
+安装 -- 声明式渲染 -- 组件系统 -- 客户端路由vue-router  -- 状态管理vuex -- ajax数据请求axios, VueAxios -- 构建系统vue-cli -- 服务器端渲染Nuxt.js
