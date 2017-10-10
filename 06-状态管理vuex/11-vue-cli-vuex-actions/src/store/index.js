@@ -16,8 +16,8 @@ const state = {
 
 const mutations = {
   [types.INCREMENT] (state, payload) {
-    // state.count += payload.amount
-    state.count++
+    state.count += payload.amount
+    // state.count++
   },
   [types.DECREMENT] (state, payload) {
     state.count -= payload.amount

@@ -3,7 +3,11 @@
     <img src="./assets/logo.png">
     <p>{{ count }}</p>
     <p>
-      <button @click="increment">+</button>
+      <button @click="increment">increment</button>
+      <button @click="incrementBy(10)">incrementBy(10)</button>
+      <button @click="add(100)">add</button>
+      <button @click="incrementAsync">incrementAsync</button>
+      <button @click="incrementAsyncB">incrementAsyncB</button>
       <button @click="decrement">-</button>
     </p>
     <ul>
@@ -22,7 +26,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'app',
   computed: {
@@ -50,11 +54,28 @@ export default {
     // increment () {
     //   this.$store.commit('increment');
     // }
-    ...mapMutations([
-      'increment'
-    ]),
+    // ...mapMutations([
+    //   'increment'
+    // ]),
     decrement () {
       this.$store.dispatch('decrement', 10)
+    },
+    ...mapActions([
+      'increment',
+      'incrementBy'
+    ]),
+    ...mapActions({
+      add: 'increment'
+    }),
+    incrementAsync () {
+      this.$store.dispatch('incrementAsync').then(() => {
+        console.log('async increment finish')
+      })
+    },
+    incrementAsyncB () {
+      this.$store.dispatch('incrementAsyncB').then(() => {
+        console.log('asyncb increment finish')
+      })
     }
 
   }
