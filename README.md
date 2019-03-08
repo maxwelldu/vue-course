@@ -1,3 +1,5 @@
+视频地址：链接: https://pan.baidu.com/s/17GXjLcoXDPKS8CuyhE7REQ 提取码: bj3r 复制这段内容后打开百度网盘手机App，操作更方便哦
+
 #兼容性
   Vue.js 不支持 IE8 及其以下版本，因为 Vue.js 使用了 IE8 不能模拟的 ECMAScript 5 特性。
   Vue只支持 兼容ECMAScript5的浏览器 http://caniuse.com/#feat=es5
